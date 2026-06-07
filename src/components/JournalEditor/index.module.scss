@@ -54,12 +54,11 @@
 
 .toolbar {
   position: fixed;
-  bottom: 0;
+  bottom: calc(120rpx + env(safe-area-inset-bottom));
   left: 0;
   right: 0;
   background: $color-bg-card;
   padding: $spacing-md $spacing-lg;
-  padding-bottom: calc(env(safe-area-inset-bottom) + $spacing-md);
   box-shadow: $shadow-float;
   display: flex;
   justify-content: space-around;
@@ -157,7 +156,7 @@
 
 .panelContainer {
   position: fixed;
-  bottom: 0;
+  bottom: calc(120rpx + env(safe-area-inset-bottom));
   left: 0;
   right: 0;
   z-index: 300;
