@@ -1,0 +1,62 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: $spacing-lg 0;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 120rpx);
+  box-sizing: border-box;
+}
+
+.header {
+  padding: 0 $page-padding;
+  margin-bottom: $spacing-lg;
+}
+
+.title {
+  font-family: $font-family-serif;
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.subtitle {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.categoryTabs {
+  padding: 0 $page-padding;
+  margin-bottom: $spacing-lg;
+  display: flex;
+  gap: $spacing-sm;
+  overflow-x: auto;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.categoryTab {
+  @include button-reset;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $radius-button;
+  background: $color-bg-card;
+  color: $color-text-secondary;
+  font-size: $font-size-sm;
+  white-space: nowrap;
+  box-shadow: $shadow-soft;
+  @include press-effect;
+  
+  &.active {
+    background: $color-primary;
+    color: $color-text-white;
+  }
+}
+
+.templateGrid {
+  padding: 0 $page-padding;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
+}

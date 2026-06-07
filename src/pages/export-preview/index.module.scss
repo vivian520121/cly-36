@@ -1,0 +1,190 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: $spacing-lg $page-padding;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 180rpx);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: $spacing-lg;
+}
+
+.title {
+  font-family: $font-family-serif;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.subtitle {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.previewWrapper {
+  width: 100%;
+  max-width: $max-content-width;
+  margin-bottom: $spacing-xl;
+}
+
+.previewCard {
+  width: 100%;
+  aspect-ratio: 686 / 900;
+  position: relative;
+  overflow: hidden;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+}
+
+.previewContent {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.textLayer {
+  width: 100%;
+  height: 100%;
+  padding: 60rpx;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow: hidden;
+}
+
+.stickerLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.sticker {
+  position: absolute;
+  
+  :global(svg) {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+}
+
+.options {
+  width: 100%;
+  max-width: $max-content-width;
+  margin-bottom: $spacing-lg;
+}
+
+.sectionTitle {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-md;
+  font-weight: $font-weight-medium;
+}
+
+.sizeOptions {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.sizeBtn {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-md;
+  border-radius: $radius-md;
+  background: $color-bg-card;
+  color: $color-text-secondary;
+  font-size: $font-size-sm;
+  box-shadow: $shadow-soft;
+  @include press-effect;
+  
+  &.active {
+    background: $color-primary;
+    color: $color-text-white;
+  }
+}
+
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $color-bg-card;
+  padding: $spacing-md $page-padding;
+  padding-bottom: calc(env(safe-area-inset-bottom) + $spacing-md);
+  box-shadow: $shadow-float;
+  display: flex;
+  gap: $spacing-md;
+}
+
+.cancelBtn {
+  @include button-reset;
+  width: 200rpx;
+  height: $button-height-lg;
+  background: $color-bg-hover;
+  color: $color-text-secondary;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  @include press-effect;
+}
+
+.saveBtn {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-lg;
+  background: $color-primary;
+  color: $color-text-white;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  @include press-effect;
+  
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+
+.saving {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  
+  Text {
+    color: $color-text-white;
+    margin-top: $spacing-md;
+    font-size: $font-size-md;
+  }
+}
+
+.spinner {
+  width: 80rpx;
+  height: 80rpx;
+  border: 6rpx solid rgba(255, 255, 255, 0.3);
+  border-top-color: $color-text-white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

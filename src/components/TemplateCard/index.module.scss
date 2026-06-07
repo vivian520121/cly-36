@@ -1,0 +1,41 @@
+@use '@/styles/variables.scss' as *;
+
+.card {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-card;
+  @include press-effect;
+}
+
+.thumbnail {
+  width: 100%;
+  height: 320rpx;
+  background: $color-bg-hover;
+  
+  Image {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.info {
+  padding: $spacing-md;
+}
+
+.name {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  margin-bottom: $spacing-xs;
+  @include text-ellipsis;
+}
+
+.category {
+  display: inline-block;
+  padding: 4rpx 16rpx;
+  background: $color-secondary-light;
+  color: $color-primary;
+  font-size: $font-size-xs;
+  border-radius: $radius-round;
+}

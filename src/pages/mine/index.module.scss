@@ -1,0 +1,165 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: $spacing-lg 0;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 120rpx);
+  box-sizing: border-box;
+}
+
+.profile {
+  padding: 0 $page-padding;
+  margin-bottom: $spacing-xl;
+}
+
+.profileCard {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-xl;
+  padding: $spacing-xl;
+  color: $color-text-white;
+  box-shadow: $shadow-card;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: $radius-round;
+  background: rgba(255, 255, 255, 0.2);
+  margin-bottom: $spacing-md;
+  @include flex-center;
+  font-size: 48rpx;
+}
+
+.name {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  margin-bottom: $spacing-xs;
+}
+
+.bio {
+  font-size: $font-size-sm;
+  opacity: 0.85;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: $spacing-xl;
+  padding-top: $spacing-lg;
+  border-top: 1rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statNum {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  display: block;
+}
+
+.statLabel {
+  font-size: $font-size-xs;
+  opacity: 0.85;
+}
+
+.menuSection {
+  padding: 0 $page-padding;
+  margin-bottom: $spacing-lg;
+}
+
+.sectionTitle {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-md;
+  font-weight: $font-weight-medium;
+  padding: 0 $spacing-sm;
+}
+
+.menuList {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-soft;
+}
+
+.menuItem {
+  @include flex-between;
+  padding: $spacing-lg;
+  border-bottom: 1rpx solid $color-divider;
+  @include press-effect;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  &:active {
+    background: $color-bg-hover;
+  }
+}
+
+.menuLeft {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.menuIcon {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  :global(svg) {
+    width: 100%;
+    height: 100%;
+    color: $color-primary;
+  }
+}
+
+.menuText {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+}
+
+.menuRight {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  
+  Text {
+    font-size: $font-size-sm;
+    color: $color-text-tertiary;
+  }
+}
+
+.arrow {
+  width: 24rpx;
+  height: 24rpx;
+  opacity: 0.5;
+  
+  :global(svg) {
+    width: 100%;
+    height: 100%;
+    color: $color-text-tertiary;
+  }
+}
+
+.about {
+  text-align: center;
+  margin-top: $spacing-xxl;
+  padding: 0 $page-padding;
+}
+
+.version {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-xs;
+}
+
+.copyright {
+  font-size: $font-size-xs;
+  color: $color-text-disabled;
+}

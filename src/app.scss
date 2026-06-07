@@ -1,0 +1,72 @@
+@use '@/styles/compat.scss';
+@use '@/styles/variables.scss' as *;
+
+// 全局样式
+page {
+  font-family: $font-family-sans;
+  font-size: $font-size-md;
+  line-height: $line-height-normal;
+  color: $color-text-primary;
+  background-color: $color-bg-page;
+}
+
+// 全局容器
+.page-container {
+  min-height: 100vh;
+  padding: 0 $page-padding;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 120rpx);
+  box-sizing: border-box;
+}
+
+// 卡片基础样式
+.card {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+}
+
+// 按钮通用样式
+.btn-primary {
+  @include button-reset;
+  height: $button-height-md;
+  background: $color-primary;
+  color: $color-text-white;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  @include press-effect;
+}
+
+.btn-secondary {
+  @include button-reset;
+  height: $button-height-md;
+  background: $color-secondary-light;
+  color: $color-primary;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  @include press-effect;
+}
+
+// 文本样式
+.text-serif {
+  font-family: $font-family-serif;
+}
+
+.text-secondary {
+  color: $color-text-secondary;
+}
+
+.text-tertiary {
+  color: $color-text-tertiary;
+}
+
+// 滚动隐藏滚动条
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  background: transparent;
+}

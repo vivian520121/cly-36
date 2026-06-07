@@ -1,0 +1,61 @@
+@use '@/styles/variables.scss' as *;
+
+.card {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+  @include press-effect;
+}
+
+.header {
+  @include flex-between;
+  margin-bottom: $spacing-sm;
+}
+
+.title {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  flex: 1;
+  @include text-ellipsis;
+}
+
+.deleteBtn {
+  @include button-reset;
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: $radius-round;
+  color: $color-text-tertiary;
+  font-size: $font-size-sm;
+  
+  &:active {
+    background: $color-bg-hover;
+  }
+}
+
+.preview {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
+  margin-bottom: $spacing-sm;
+  @include text-ellipsis-multi(2);
+}
+
+.footer {
+  @include flex-between;
+}
+
+.time {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.stickerCount {
+  font-size: $font-size-xs;
+  color: $color-primary;
+  background: $color-secondary-light;
+  padding: 4rpx 16rpx;
+  border-radius: $radius-round;
+}

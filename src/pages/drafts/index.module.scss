@@ -1,0 +1,98 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: $spacing-lg 0;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 120rpx);
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 $page-padding;
+  margin-bottom: $spacing-lg;
+}
+
+.headerLeft {
+  flex: 1;
+}
+
+.refreshBtn {
+  width: 56rpx;
+  height: 56rpx;
+  color: $color-primary;
+  @include press-effect;
+  
+  :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.title {
+  font-family: $font-family-serif;
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.subtitle {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.draftList {
+  padding: 0 $page-padding;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 0;
+}
+
+.emptyIcon {
+  width: 160rpx;
+  height: 160rpx;
+  margin-bottom: $spacing-lg;
+  opacity: 0.5;
+  
+  :global(svg) {
+    width: 100%;
+    height: 100%;
+    color: $color-text-tertiary;
+  }
+}
+
+.emptyText {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-lg;
+}
+
+.createBtn {
+  @include button-reset;
+  padding: $spacing-md $spacing-xl;
+  background: $color-primary;
+  color: $color-text-white;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  @include press-effect;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: $spacing-xl 0;
+  
+  Text {
+    font-size: $font-size-sm;
+    color: $color-text-tertiary;
+  }
+}

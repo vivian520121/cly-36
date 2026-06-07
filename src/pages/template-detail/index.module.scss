@@ -1,0 +1,187 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: $spacing-lg $page-padding;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 140rpx);
+  box-sizing: border-box;
+}
+
+.previewSection {
+  margin-bottom: $spacing-xl;
+}
+
+.previewTitle {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-md;
+  font-weight: $font-weight-medium;
+}
+
+.previewCard {
+  width: 100%;
+  aspect-ratio: 686 / 900;
+  max-width: $max-content-width;
+  margin: 0 auto;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-card;
+  position: relative;
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  
+  Image {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.previewOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.4) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: $spacing-lg;
+  color: $color-text-white;
+}
+
+.previewName {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  margin-bottom: $spacing-xs;
+  font-family: $font-family-serif;
+}
+
+.previewCategory {
+  display: inline-block;
+  padding: 4rpx 16rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: $radius-round;
+  font-size: $font-size-xs;
+  align-self: flex-start;
+}
+
+.infoSection {
+  margin-bottom: $spacing-xl;
+}
+
+.infoCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.infoRow {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-md;
+  margin-bottom: $spacing-md;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.infoIcon {
+  width: 48rpx;
+  height: 48rpx;
+  flex-shrink: 0;
+  
+  :global(svg) {
+    width: 100%;
+    height: 100%;
+    color: $color-primary;
+  }
+}
+
+.infoContent {
+  flex: 1;
+}
+
+.infoLabel {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-xs;
+}
+
+.infoValue {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  line-height: $line-height-normal;
+}
+
+.featureList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}
+
+.featureTag {
+  padding: $spacing-xs $spacing-md;
+  background: $color-secondary-light;
+  color: $color-primary;
+  font-size: $font-size-xs;
+  border-radius: $radius-round;
+}
+
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $color-bg-card;
+  padding: $spacing-md $page-padding;
+  padding-bottom: calc(env(safe-area-inset-bottom) + $spacing-md);
+  box-shadow: $shadow-float;
+  display: flex;
+  gap: $spacing-md;
+}
+
+.useBtn {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-lg;
+  background: $color-primary;
+  color: $color-text-white;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  @include press-effect;
+}
+
+.favoriteBtn {
+  @include button-reset;
+  width: $button-height-lg;
+  height: $button-height-lg;
+  background: $color-secondary-light;
+  border-radius: $radius-button;
+  @include flex-center;
+  @include press-effect;
+  
+  :global(svg) {
+    width: 40rpx;
+    height: 40rpx;
+    color: $color-primary;
+  }
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  
+  Text {
+    font-size: $font-size-md;
+    color: $color-text-tertiary;
+  }
+}

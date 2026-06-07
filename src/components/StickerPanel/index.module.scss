@@ -1,0 +1,124 @@
+@use '@/styles/variables.scss' as *;
+
+.panel {
+  background: $color-bg-card;
+  border-radius: $radius-xl $radius-xl 0 0;
+  padding: $spacing-lg;
+  padding-bottom: calc(env(safe-area-inset-bottom) + $spacing-lg);
+  box-shadow: $shadow-float;
+  max-height: 60vh;
+}
+
+.header {
+  @include flex-between;
+  margin-bottom: $spacing-lg;
+}
+
+.title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.closeBtn {
+  @include button-reset;
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: $radius-round;
+  color: $color-text-tertiary;
+  font-size: $font-size-lg;
+  
+  &:active {
+    background: $color-bg-hover;
+  }
+}
+
+.tabs {
+  display: flex;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-lg;
+  border-bottom: 2rpx solid $color-divider;
+  padding-bottom: $spacing-sm;
+}
+
+.tab {
+  @include button-reset;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  @include press-effect;
+  
+  &.active {
+    background: $color-primary;
+    color: $color-text-white;
+  }
+}
+
+.stickerGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: $spacing-md;
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.stickerItem {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-bg-hover;
+  border-radius: $radius-md;
+  padding: $spacing-sm;
+  box-sizing: border-box;
+  @include press-effect;
+  
+  &:active {
+    background: $color-secondary-light;
+  }
+  
+  :global(svg) {
+    width: 100%;
+    height: 100%;
+    color: $color-primary;
+  }
+}
+
+.colorSection {
+  margin-top: $spacing-lg;
+  padding-top: $spacing-lg;
+  border-top: 2rpx solid $color-divider;
+}
+
+.sectionTitle {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-md;
+}
+
+.colorRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+}
+
+.colorItem {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-round;
+  border: 4rpx solid transparent;
+  box-sizing: border-box;
+  @include press-effect;
+  
+  &.active {
+    border-color: $color-primary;
+  }
+}
+
+.tip {
+  margin-top: $spacing-md;
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  text-align: center;
+}

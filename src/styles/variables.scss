@@ -1,0 +1,156 @@
+// 必须转发和使用 theme.scss
+@forward './theme.scss';
+@use './theme.scss' as *;
+
+// ============================================
+// 全局 SCSS 变量（文艺手账风格）
+// ============================================
+
+// 屏幕适配（设计稿基准 750rpx）
+$screen-width: 750rpx;
+$page-padding: 32rpx;
+$page-spacing: 32rpx;
+$max-content-width: 686rpx;
+
+// 间距（8px 网格系统）
+$spacing-xs: 8rpx;
+$spacing-sm: 16rpx;
+$spacing-md: 24rpx;
+$spacing-lg: 32rpx;
+$spacing-xl: 48rpx;
+$spacing-xxl: 64rpx;
+
+// 圆角（语义化）
+$radius-xs: 4rpx;
+$radius-sm: 8rpx;
+$radius-md: 12rpx;
+$radius-lg: 16rpx;
+$radius-xl: 20rpx;
+$radius-button: 48rpx;
+$radius-round: 999rpx;
+
+// 按钮高度
+$button-height-sm: 64rpx;
+$button-height-md: 80rpx;
+$button-height-lg: 96rpx;
+
+// 阴影（文艺手账风格 - 柔和暖色调阴影）
+$shadow-card: 0 2rpx 12rpx rgba(139, 115, 85, 0.08);
+$shadow-card-hover: 0 4rpx 20rpx rgba(139, 115, 85, 0.12);
+$shadow-float: 0 4rpx 16rpx rgba(139, 115, 85, 0.1);
+$shadow-popup: 0 8rpx 32rpx rgba(139, 115, 85, 0.15);
+$shadow-soft: 0 2rpx 8rpx rgba(139, 115, 85, 0.06);
+
+// 字体大小
+$font-size-xs: 22rpx;
+$font-size-sm: 24rpx;
+$font-size-md: 28rpx;
+$font-size-lg: 32rpx;
+$font-size-xl: 36rpx;
+$font-size-xxl: 40rpx;
+$font-size-display: 48rpx;
+
+// 行高
+$line-height-tight: 1.3;
+$line-height-normal: 1.6;
+$line-height-loose: 1.9;
+$line-height-poem: 2.2;
+
+// 字重
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// 字体家族
+$font-family-serif: "Georgia", "Noto Serif SC", "Songti SC", serif;
+$font-family-sans: "-apple-system", "PingFang SC", "Microsoft YaHei", sans-serif;
+
+// 手账画布尺寸
+$journal-canvas-width: 686rpx;
+$journal-canvas-height: 900rpx;
+
+// 过渡动画
+$transition-fast: 0.15s ease;
+$transition-base: 0.25s ease;
+$transition-slow: 0.35s ease;
+
+// ============================================
+// 常用 Mixin
+// ============================================
+@mixin text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin text-ellipsis-multi($lines: 2) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin clearfix {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin scroll-x-container {
+  white-space: nowrap;
+}
+
+@mixin scroll-x-item($width) {
+  display: inline-block;
+  width: $width;
+  vertical-align: top;
+  white-space: normal;
+}
+
+@mixin button-reset {
+  padding: 0;
+  margin: 0;
+  line-height: normal;
+  text-align: inherit;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+
+  &::after {
+    border: none;
+  }
+}
+
+@mixin paper-texture {
+  background-color: $color-bg-card;
+  background-image: 
+    linear-gradient(90deg, transparent 79px, rgba(139, 115, 85, 0.1) 79px, rgba(139, 115, 85, 0.1) 81px, transparent 81px),
+    linear-gradient(rgba(139, 115, 85, 0.05) 1px, transparent 1px);
+  background-size: 100% 30rpx;
+}
+
+@mixin press-effect {
+  transition: all $transition-base;
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}

@@ -1,0 +1,160 @@
+@use '@/styles/variables.scss' as *;
+
+.panel {
+  background: $color-bg-card;
+  border-radius: $radius-xl $radius-xl 0 0;
+  padding: $spacing-lg;
+  padding-bottom: calc(env(safe-area-inset-bottom) + $spacing-lg);
+  box-shadow: $shadow-float;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.header {
+  @include flex-between;
+  margin-bottom: $spacing-lg;
+}
+
+.title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.closeBtn {
+  @include button-reset;
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: $radius-round;
+  color: $color-text-tertiary;
+  font-size: $font-size-lg;
+  
+  &:active {
+    background: $color-bg-hover;
+  }
+}
+
+.section {
+  margin-bottom: $spacing-lg;
+}
+
+.sectionTitle {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-md;
+  font-weight: $font-weight-medium;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+}
+
+.colorItem {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-round;
+  border: 4rpx solid transparent;
+  box-sizing: border-box;
+  @include press-effect;
+  
+  &.active {
+    border-color: $color-primary;
+  }
+}
+
+.fontItem {
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-md;
+  background: $color-bg-hover;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  @include press-effect;
+  
+  &.active {
+    background: $color-primary;
+    color: $color-text-white;
+  }
+}
+
+.fontWeightRow {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.weightBtn {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-md;
+  border-radius: $radius-md;
+  background: $color-bg-hover;
+  color: $color-text-primary;
+  font-size: $font-size-sm;
+  @include press-effect;
+  
+  &.active {
+    background: $color-primary;
+    color: $color-text-white;
+  }
+}
+
+.alignRow {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.alignBtn {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-md;
+  border-radius: $radius-md;
+  background: $color-bg-hover;
+  color: $color-text-primary;
+  font-size: $font-size-md;
+  @include press-effect;
+  
+  &.active {
+    background: $color-primary;
+    color: $color-text-white;
+  }
+}
+
+.sliderSection {
+  margin-bottom: $spacing-lg;
+}
+
+.sliderLabel {
+  @include flex-between;
+  margin-bottom: $spacing-sm;
+  
+  Text {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+  }
+}
+
+.slider {
+  margin: 0;
+}
+
+.borderTypeRow {
+  display: flex;
+  gap: $spacing-sm;
+  flex-wrap: wrap;
+}
+
+.borderBtn {
+  @include button-reset;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-md;
+  background: $color-bg-hover;
+  color: $color-text-primary;
+  font-size: $font-size-sm;
+  @include press-effect;
+  
+  &.active {
+    background: $color-primary;
+    color: $color-text-white;
+  }
+}
