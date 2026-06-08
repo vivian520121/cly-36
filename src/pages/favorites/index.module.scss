@@ -1,0 +1,121 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: $spacing-lg 0;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 50px);
+  box-sizing: border-box;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx $page-padding;
+  text-align: center;
+
+  .icon {
+    font-size: 120rpx;
+    margin-bottom: $spacing-lg;
+    opacity: 0.3;
+  }
+
+  .text {
+    font-size: $font-size-md;
+    color: $color-text-tertiary;
+    margin-bottom: $spacing-xl;
+  }
+
+  .btn {
+    background: $color-primary;
+    color: $color-text-white;
+    border: none;
+    border-radius: $radius-lg;
+    padding: $spacing-md $spacing-xl;
+    font-size: $font-size-md;
+  }
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 $page-padding;
+  gap: $spacing-md;
+}
+
+.card {
+  width: calc(50% - #{$spacing-md} / 2);
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-soft;
+  @include press-effect;
+
+  &:active {
+    transform: scale(0.96);
+  }
+}
+
+.cover {
+  position: relative;
+  width: 100%;
+  padding-bottom: 133%;
+  background: $color-bg-hover;
+
+  image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .favoriteBtn {
+    position: absolute;
+    top: 16rpx;
+    right: 16rpx;
+    width: 56rpx;
+    height: 56rpx;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28rpx;
+    color: #B86464;
+    z-index: 10;
+  }
+}
+
+.info {
+  padding: $spacing-md;
+}
+
+.name {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.category {
+  font-size: $font-size-xs;
+  color: $color-primary;
+  background: rgba(139, 115, 85, 0.1);
+  padding: 4rpx 12rpx;
+  border-radius: $radius-sm;
+  display: inline-block;
+}
+
+.favoritedAt {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-top: $spacing-sm;
+}

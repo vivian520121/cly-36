@@ -1,0 +1,171 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: $spacing-lg 0;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 50px);
+  box-sizing: border-box;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx $page-padding;
+  text-align: center;
+
+  .icon {
+    font-size: 120rpx;
+    margin-bottom: $spacing-lg;
+    opacity: 0.3;
+  }
+
+  .text {
+    font-size: $font-size-md;
+    color: $color-text-tertiary;
+    margin-bottom: $spacing-xl;
+  }
+
+  .btn {
+    background: $color-primary;
+    color: $color-text-white;
+    border: none;
+    border-radius: $radius-lg;
+    padding: $spacing-md $spacing-xl;
+    font-size: $font-size-md;
+  }
+}
+
+.recordList {
+  padding: 0 $page-padding;
+}
+
+.recordItem {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-soft;
+  @include press-effect;
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.recordHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.recordInfo {
+  flex: 1;
+  margin-right: $spacing-md;
+}
+
+.recordTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+  line-height: 1.5;
+}
+
+.recordMeta {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  flex-wrap: wrap;
+}
+
+.metaItem {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.sizeTag {
+  display: inline-block;
+  padding: 2rpx 12rpx;
+  background: rgba(139, 115, 85, 0.1);
+  color: $color-primary;
+  border-radius: $radius-sm;
+  font-size: $font-size-xs;
+}
+
+.recordPreview {
+  width: 100%;
+  border-radius: $radius-md;
+  overflow: hidden;
+  background: $color-bg-hover;
+
+  image {
+    width: 100%;
+    height: 400rpx;
+    display: block;
+  }
+}
+
+.recordActions {
+  display: flex;
+  gap: $spacing-md;
+  margin-top: $spacing-md;
+  padding-top: $spacing-md;
+  border-top: 1rpx solid $color-divider;
+}
+
+.actionBtn {
+  flex: 1;
+  height: 64rpx;
+  font-size: $font-size-sm;
+  border-radius: $radius-md;
+
+  &.primary {
+    background: $color-primary;
+    color: $color-text-white;
+    border: none;
+  }
+
+  &.danger {
+    background: transparent;
+    color: #B86464;
+    border: 1rpx solid #B86464;
+  }
+}
+
+.previewModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .closeBtn {
+    position: absolute;
+    top: 60rpx;
+    right: 40rpx;
+    width: 80rpx;
+    height: 80rpx;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: #fff;
+    font-size: 40rpx;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .previewImage {
+    max-width: 90%;
+    max-height: 80%;
+    border-radius: $radius-md;
+  }
+}

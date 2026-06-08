@@ -1,8 +1,11 @@
 import Taro from '@tarojs/taro';
-import { JournalData, DraftItem } from '@/types/journal';
+import { JournalData, DraftItem, ExportRecord, FavoriteTemplate, LayoutTemplate, FeedbackRecord } from '@/types/journal';
 
 const DRAFTS_KEY = 'journal_drafts';
 const CURRENT_DRAFT_KEY = 'current_draft_id';
+const EXPORT_RECORDS_KEY = 'export_records';
+const FAVORITE_TEMPLATES_KEY = 'favorite_templates';
+const FEEDBACK_RECORDS_KEY = 'feedback_records';
 
 export const saveDraft = async (data: JournalData): Promise<void> => {
   try {
@@ -93,4 +96,154 @@ export const getCurrentDraftId = async (): Promise<string | null> => {
 
 export const generateId = (): string => {
   return `j_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+};
+
+export const saveExportRecord = async (
+  data: JournalData,
+  imageUrl: string,
+  size: '1x' | '2x' | '3x'
+): Promise<void> => {
+  try {
+    const records = await getExportRecords();
+    const now = Date.now();
+    const record: ExportRecord = {
+      id: `exp_${now}_${Math.random().toString(36).substr(2, 9)}`,
+      title: data.content.slice(0, 30) || '未命名手账',
+      preview: data.content.slice(0, 100),
+      imageUrl,
+      size,
+      exportedAt: now,
+      data: { ...data },
+    };
+    records.unshift(record);
+    await Taro.setStorage({
+      key: EXPORT_RECORDS_KEY,
+      data: JSON.stringify(records),
+    });
+    console.log('[Storage] 导出记录已保存:', record.id);
+  } catch (error) {
+    console.error('[Storage] 保存导出记录失败:', error);
+    throw error;
+  }
+};
+
+export const getExportRecords = async (): Promise<ExportRecord[]> => {
+  try {
+    const res = await Taro.getStorage({ key: EXPORT_RECORDS_KEY });
+    return res.data ? JSON.parse(res.data) : [];
+  } catch {
+    return [];
+  }
+};
+
+export const deleteExportRecord = async (id: string): Promise<void> => {
+  try {
+    const records = await getExportRecords();
+    const filtered = records.filter(r => r.id !== id);
+    await Taro.setStorage({
+      key: EXPORT_RECORDS_KEY,
+      data: JSON.stringify(filtered),
+    });
+    console.log('[Storage] 导出记录已删除:', id);
+  } catch (error) {
+    console.error('[Storage] 删除导出记录失败:', error);
+    throw error;
+  }
+};
+
+export const addFavoriteTemplate = async (template: LayoutTemplate): Promise<void> => {
+  try {
+    const favorites = await getFavoriteTemplates();
+    const existingIndex = favorites.findIndex(f => f.templateId === template.id);
+    if (existingIndex >= 0) {
+      console.log('[Storage] 模板已收藏:', template.id);
+      return;
+    }
+    const now = Date.now();
+    const favorite: FavoriteTemplate = {
+      id: `fav_${now}_${Math.random().toString(36).substr(2, 9)}`,
+      templateId: template.id,
+      template: { ...template },
+      favoritedAt: now,
+    };
+    favorites.unshift(favorite);
+    await Taro.setStorage({
+      key: FAVORITE_TEMPLATES_KEY,
+      data: JSON.stringify(favorites),
+    });
+    console.log('[Storage] 模板已收藏:', template.id);
+  } catch (error) {
+    console.error('[Storage] 收藏模板失败:', error);
+    throw error;
+  }
+};
+
+export const removeFavoriteTemplate = async (templateId: string): Promise<void> => {
+  try {
+    const favorites = await getFavoriteTemplates();
+    const filtered = favorites.filter(f => f.templateId !== templateId);
+    await Taro.setStorage({
+      key: FAVORITE_TEMPLATES_KEY,
+      data: JSON.stringify(filtered),
+    });
+    console.log('[Storage] 已取消收藏模板:', templateId);
+  } catch (error) {
+    console.error('[Storage] 取消收藏失败:', error);
+    throw error;
+  }
+};
+
+export const getFavoriteTemplates = async (): Promise<FavoriteTemplate[]> => {
+  try {
+    const res = await Taro.getStorage({ key: FAVORITE_TEMPLATES_KEY });
+    return res.data ? JSON.parse(res.data) : [];
+  } catch {
+    return [];
+  }
+};
+
+export const isTemplateFavorited = async (templateId: string): Promise<boolean> => {
+  try {
+    const favorites = await getFavoriteTemplates();
+    return favorites.some(f => f.templateId === templateId);
+  } catch {
+    return false;
+  }
+};
+
+export const saveFeedback = async (
+  type: 'bug' | 'feature' | 'suggestion' | 'other',
+  content: string,
+  contact?: string
+): Promise<void> => {
+  try {
+    const records = await getFeedbackRecords();
+    const now = Date.now();
+    const record: FeedbackRecord = {
+      id: `fb_${now}_${Math.random().toString(36).substr(2, 9)}`,
+      type,
+      content,
+      contact,
+      createdAt: now,
+      status: 'pending',
+    };
+    records.unshift(record);
+    await Taro.setStorage({
+      key: FEEDBACK_RECORDS_KEY,
+      data: JSON.stringify(records),
+    });
+    console.log('[Storage] 反馈已保存:', record.id);
+  } catch (error) {
+    console.error('[Storage] 保存反馈失败:', error);
+    throw error;
+  }
+};
+
+export const getFeedbackRecords = async (): Promise<FeedbackRecord[]> => {
+  try {
+    const res = await Taro.getStorage({ key: FEEDBACK_RECORDS_KEY });
+    return res.data ? JSON.parse(res.data) : [];
+  } catch {
+    return [];
+  }
 };

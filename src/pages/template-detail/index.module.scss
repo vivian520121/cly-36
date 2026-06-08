@@ -171,6 +171,16 @@
     width: 40rpx;
     height: 40rpx;
     color: $color-primary;
+    transition: all 0.3s ease;
+  }
+
+  &.favorited {
+    background: rgba(184, 100, 100, 0.1);
+
+    :global(svg) {
+      color: #B86464;
+      fill: #B86464;
+    }
   }
 }
 

@@ -5,7 +5,10 @@ export default defineAppConfig({
     'pages/drafts/index',
     'pages/mine/index',
     'pages/template-detail/index',
-    'pages/export-preview/index'
+    'pages/export-preview/index',
+    'pages/export-history/index',
+    'pages/favorites/index',
+    'pages/feedback/index'
   ],
   window: {
     backgroundTextStyle: 'dark',

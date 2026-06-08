@@ -1,24 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text } from '@tarojs/components';
-import Taro from '@tarojs/taro';
-import { getDrafts } from '@/utils/storage';
+import Taro, { useDidShow } from '@tarojs/taro';
+import { getDrafts, getExportRecords, getFavoriteTemplates } from '@/utils/storage';
 import styles from './index.module.scss';
 
 const MinePage: React.FC = () => {
-  const [stats, setStats] = useState({ drafts: 0, templates: 8 });
+  const [stats, setStats] = useState({ drafts: 0, templates: 8, exports: 0, favorites: 0 });
+
+  const loadStats = async () => {
+    try {
+      const [drafts, exports, favorites] = await Promise.all([
+        getDrafts(),
+        getExportRecords(),
+        getFavoriteTemplates(),
+      ]);
+      setStats({
+        drafts: drafts.length,
+        templates: 8,
+        exports: exports.length,
+        favorites: favorites.length,
+      });
+    } catch (error) {
+      console.error('[MinePage] 加载统计失败:', error);
+    }
+  };
 
   useEffect(() => {
     loadStats();
   }, []);
 
-  const loadStats = async () => {
-    try {
-      const drafts = await getDrafts();
-      setStats(prev => ({ ...prev, drafts: drafts.length }));
-    } catch (error) {
-      console.error('[MinePage] 加载统计失败:', error);
-    }
-  };
+  useDidShow(() => {
+    loadStats();
+  });
 
   const createIconSvg = (type: string) => {
     const svgMap: Record<string, string> = {
@@ -41,17 +54,17 @@ const MinePage: React.FC = () => {
     {
       icon: 'export',
       text: '导出记录',
-      onClick: () => Taro.showToast({ title: '功能开发中', icon: 'none' }),
+      onClick: () => Taro.navigateTo({ url: '/pages/export-history/index' }),
     },
     {
       icon: 'template',
       text: '收藏模板',
-      onClick: () => Taro.showToast({ title: '功能开发中', icon: 'none' }),
+      onClick: () => Taro.navigateTo({ url: '/pages/favorites/index' }),
     },
     {
       icon: 'feedback',
       text: '意见反馈',
-      onClick: () => Taro.showToast({ title: '功能开发中', icon: 'none' }),
+      onClick: () => Taro.navigateTo({ url: '/pages/feedback/index' }),
     },
     {
       icon: 'about',
@@ -83,7 +96,11 @@ const MinePage: React.FC = () => {
               <Text className={styles.statLabel}>可用模板</Text>
             </View>
             <View className={styles.statItem}>
-              <Text className={styles.statNum}>0</Text>
+              <Text className={styles.statNum}>{stats.favorites}</Text>
+              <Text className={styles.statLabel}>收藏</Text>
+            </View>
+            <View className={styles.statItem}>
+              <Text className={styles.statNum}>{stats.exports}</Text>
               <Text className={styles.statLabel}>导出</Text>
             </View>
           </View>

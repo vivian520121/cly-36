@@ -4,7 +4,7 @@ import Taro from '@tarojs/taro';
 import classnames from 'classnames';
 import { useJournalStore } from '@/store/journalStore';
 import { stickers } from '@/data/stickers';
-import { saveDraft } from '@/utils/storage';
+import { saveDraft, saveExportRecord } from '@/utils/storage';
 import styles from './index.module.scss';
 
 const ExportPreviewPage: React.FC = () => {
@@ -181,6 +181,8 @@ const ExportPreviewPage: React.FC = () => {
         link.href = dataUrl;
         link.click();
 
+        await saveExportRecord(currentJournal, dataUrl, exportSize);
+
         Taro.showToast({
           title: '已保存到本地',
           icon: 'success',
@@ -203,7 +205,7 @@ const ExportPreviewPage: React.FC = () => {
     } finally {
       setSaving(false);
     }
-  }, [currentJournal, renderToCanvas]);
+  }, [currentJournal, exportSize, renderToCanvas]);
 
   const handleCancel = () => {
     Taro.navigateBack();

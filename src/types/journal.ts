@@ -100,3 +100,29 @@ export const BORDER_TYPES = [
   { label: '点线', value: 'dotted' },
   { label: '双线', value: 'double' },
 ];
+
+export interface ExportRecord {
+  id: string;
+  title: string;
+  preview: string;
+  imageUrl: string;
+  size: '1x' | '2x' | '3x';
+  exportedAt: number;
+  data: JournalData;
+}
+
+export interface FavoriteTemplate {
+  id: string;
+  templateId: string;
+  template: LayoutTemplate;
+  favoritedAt: number;
+}
+
+export interface FeedbackRecord {
+  id: string;
+  type: 'bug' | 'feature' | 'suggestion' | 'other';
+  content: string;
+  contact?: string;
+  createdAt: number;
+  status: 'pending' | 'processing' | 'resolved';
+}

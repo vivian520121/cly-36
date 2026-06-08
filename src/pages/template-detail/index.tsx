@@ -4,12 +4,15 @@ import Taro, { useRouter } from '@tarojs/taro';
 import { templates } from '@/data/templates';
 import { LayoutTemplate } from '@/types/journal';
 import { useJournalStore } from '@/store/journalStore';
+import { addFavoriteTemplate, removeFavoriteTemplate, isTemplateFavorited } from '@/utils/storage';
+import classnames from 'classnames';
 import styles from './index.module.scss';
 
 const TemplateDetailPage: React.FC = () => {
   const router = useRouter();
   const [template, setTemplate] = useState<LayoutTemplate | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isFavorited, setIsFavorited] = useState(false);
   const { applyTemplate } = useJournalStore();
 
   useEffect(() => {
@@ -17,9 +20,19 @@ const TemplateDetailPage: React.FC = () => {
     const found = templates.find(t => t.id === templateId);
     if (found) {
       setTemplate(found);
+      checkFavorite(templateId);
     }
     setLoading(false);
   }, [router.params.id]);
+
+  const checkFavorite = async (templateId: string) => {
+    try {
+      const favorited = await isTemplateFavorited(templateId);
+      setIsFavorited(favorited);
+    } catch (error) {
+      console.error('[TemplateDetail] 检查收藏状态失败:', error);
+    }
+  };
 
   const getCategoryLabel = (category: string) => {
     const map: Record<string, string> = {
@@ -58,13 +71,35 @@ const TemplateDetailPage: React.FC = () => {
     }, 800);
   }, [template, applyTemplate]);
 
-  const handleFavorite = () => {
-    Taro.showToast({
-      title: '已收藏',
-      icon: 'success',
-      duration: 1500,
-    });
-  };
+  const handleFavorite = useCallback(async () => {
+    if (!template) return;
+
+    try {
+      if (isFavorited) {
+        await removeFavoriteTemplate(template.id);
+        setIsFavorited(false);
+        Taro.showToast({
+          title: '已取消收藏',
+          icon: 'success',
+          duration: 1500,
+        });
+      } else {
+        await addFavoriteTemplate(template);
+        setIsFavorited(true);
+        Taro.showToast({
+          title: '已收藏',
+          icon: 'success',
+          duration: 1500,
+        });
+      }
+    } catch (error) {
+      console.error('[TemplateDetail] 收藏操作失败:', error);
+      Taro.showToast({
+        title: '操作失败，请重试',
+        icon: 'none',
+      });
+    }
+  }, [template, isFavorited]);
 
   if (loading) {
     return (
@@ -165,7 +200,7 @@ const TemplateDetailPage: React.FC = () => {
 
       <View className={styles.bottomBar}>
         <Button
-          className={styles.favoriteBtn}
+          className={classnames(styles.favoriteBtn, isFavorited && styles.favorited)}
           onClick={handleFavorite}
           dangerouslySetInnerHTML={{ __html: createIconSvg('heart') }}
         />

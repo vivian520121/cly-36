@@ -47,14 +47,16 @@
   margin-top: $spacing-xl;
   padding-top: $spacing-lg;
   border-top: 1rpx solid rgba(255, 255, 255, 0.2);
+  gap: $spacing-xs;
 }
 
 .statItem {
   text-align: center;
+  flex: 1;
 }
 
 .statNum {
-  font-size: $font-size-xxl;
+  font-size: $font-size-xl;
   font-weight: $font-weight-bold;
   display: block;
 }
