@@ -101,20 +101,20 @@ export const BORDER_TYPES = [
   { label: '双线', value: 'double' },
 ];
 
-export type ExportCanvasSize = 'square' | 'wallpaper' | 'card';
+export type ExportClarity = '1x' | '2x' | '3x';
 
-export const EXPORT_SIZE_PRESETS: Record<ExportCanvasSize, { label: string; desc: string; width: number; height: number }> = {
-  square: { label: '正方形', desc: '1:1', width: 1080, height: 1080 },
-  wallpaper: { label: '竖版壁纸', desc: '9:16', width: 1080, height: 1920 },
-  card: { label: '方形卡片', desc: '3:4', width: 1080, height: 1440 },
+export type ExportShape = 'square' | 'wallpaper' | 'card';
+
+export const EXPORT_SHAPE_CONFIG: Record<ExportShape, { label: string; width: number; height: number; desc: string }> = {
+  square: { label: '正方形', width: 1080, height: 1080, desc: '1080×1080' },
+  wallpaper: { label: '竖版壁纸', width: 1080, height: 1920, desc: '1080×1920' },
+  card: { label: '方形卡片', width: 800, height: 1060, desc: '800×1060' },
 };
 
-export type ExportQuality = 'standard' | 'hd' | 'ultra';
-
-export const EXPORT_QUALITY_PRESETS: Record<ExportQuality, { label: string; scale: number }> = {
-  standard: { label: '标准', scale: 1 },
-  hd: { label: '高清', scale: 2 },
-  ultra: { label: '超清', scale: 3 },
+export const EXPORT_CLARITY_CONFIG: Record<ExportClarity, { label: string; scale: number }> = {
+  '1x': { label: '标准', scale: 1 },
+  '2x': { label: '高清', scale: 2 },
+  '3x': { label: '超清', scale: 3 },
 };
 
 export interface ExportRecord {
@@ -122,10 +122,11 @@ export interface ExportRecord {
   title: string;
   preview: string;
   imageUrl: string;
-  canvasSize: ExportCanvasSize;
-  quality: ExportQuality;
+  clarity: ExportClarity;
+  shape: ExportShape;
   exportedAt: number;
   data: JournalData;
+  size?: '1x' | '2x' | '3x';
 }
 
 export interface FavoriteTemplate {

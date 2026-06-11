@@ -3,7 +3,7 @@ import { View, Text, Image, Button } from '@tarojs/components';
 import Taro, { useDidShow } from '@tarojs/taro';
 import dayjs from 'dayjs';
 import { getExportRecords, deleteExportRecord, saveDraft } from '@/utils/storage';
-import { ExportRecord, EXPORT_SIZE_PRESETS, EXPORT_QUALITY_PRESETS, ExportCanvasSize, ExportQuality } from '@/types/journal';
+import { ExportRecord, EXPORT_SHAPE_CONFIG, EXPORT_CLARITY_CONFIG } from '@/types/journal';
 import { useJournalStore } from '@/store/journalStore';
 import styles from './index.module.scss';
 
@@ -38,12 +38,13 @@ const ExportHistoryPage: React.FC = () => {
     return dayjs(timestamp).format('YYYY-MM-DD HH:mm');
   };
 
-  const getSizeLabel = (canvasSize: ExportCanvasSize) => {
-    return EXPORT_SIZE_PRESETS[canvasSize]?.label || canvasSize;
+  const getClarityLabel = (record: ExportRecord) => {
+    const clarity = record.clarity || record.size;
+    return clarity ? (EXPORT_CLARITY_CONFIG[clarity]?.label || clarity) : '标准';
   };
 
-  const getQualityLabel = (quality: ExportQuality) => {
-    return EXPORT_QUALITY_PRESETS[quality]?.label || quality;
+  const getShapeLabel = (record: ExportRecord) => {
+    return record.shape ? (EXPORT_SHAPE_CONFIG[record.shape]?.label || record.shape) : '方形卡片';
   };
 
   const handlePreview = (record: ExportRecord) => {
@@ -123,7 +124,8 @@ const ExportHistoryPage: React.FC = () => {
                   <Text className={styles.recordTitle}>{record.title}</Text>
                   <View className={styles.recordMeta}>
                     <Text className={styles.metaItem}>{formatDate(record.exportedAt)}</Text>
-                    <Text className={styles.sizeTag}>{getSizeLabel(record.canvasSize)} · {getQualityLabel(record.quality)}</Text>
+                    <Text className={styles.shapeTag}>{getShapeLabel(record)}</Text>
+                    <Text className={styles.sizeTag}>{getClarityLabel(record)}</Text>
                   </View>
                 </View>
               </View>

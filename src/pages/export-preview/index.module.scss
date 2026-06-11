@@ -36,23 +36,12 @@
 
 .previewCard {
   width: 100%;
+  max-height: 55vh;
   position: relative;
   overflow: hidden;
   border-radius: $radius-lg;
   box-shadow: $shadow-card;
-  transition: aspect-ratio $transition-base;
-}
-
-.previewSquare {
-  aspect-ratio: 1 / 1;
-}
-
-.previewWallpaper {
-  aspect-ratio: 9 / 16;
-}
-
-.previewCardRatio {
-  aspect-ratio: 686 / 900;
+  object-fit: contain;
 }
 
 .previewContent {
@@ -82,12 +71,20 @@
 
 .sticker {
   position: absolute;
-
+  
   :global(svg) {
     width: 100%;
     height: 100%;
     display: block;
   }
+}
+
+.dimensionHint {
+  display: block;
+  text-align: center;
+  margin-top: $spacing-sm;
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
 }
 
 .options {
@@ -103,6 +100,54 @@
   font-weight: $font-weight-medium;
 }
 
+.shapeOptions {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.shapeBtn {
+  @include button-reset;
+  flex: 1;
+  padding: $spacing-md 0;
+  border-radius: $radius-md;
+  background: $color-bg-card;
+  box-shadow: $shadow-soft;
+  flex-direction: column;
+  gap: $spacing-xs;
+  @include press-effect;
+
+  &.active {
+    background: $color-primary;
+    color: $color-text-white;
+
+    .shapeIcon,
+    .shapeLabel,
+    .shapeDesc {
+      color: $color-text-white;
+    }
+
+    .shapeDesc {
+      opacity: 0.8;
+    }
+  }
+}
+
+.shapeIcon {
+  font-size: 48rpx;
+  color: $color-text-primary;
+}
+
+.shapeLabel {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+}
+
+.shapeDesc {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
 .sizeOptions {
   display: flex;
   gap: $spacing-md;
@@ -111,80 +156,18 @@
 .sizeBtn {
   @include button-reset;
   flex: 1;
-  flex-direction: column;
-  height: 140rpx;
+  height: $button-height-md;
   border-radius: $radius-md;
   background: $color-bg-card;
   color: $color-text-secondary;
-  box-shadow: $shadow-soft;
-  @include press-effect;
-  gap: 4rpx;
-
-  &.active {
-    background: $color-primary;
-    color: $color-text-white;
-
-    .sizeBtnIcon,
-    .sizeBtnLabel,
-    .sizeBtnDesc {
-      color: $color-text-white;
-    }
-  }
-}
-
-.sizeBtnIcon {
-  font-size: 36rpx;
-  line-height: 1;
-}
-
-.sizeBtnLabel {
   font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
-  color: $color-text-primary;
-}
-
-.sizeBtnDesc {
-  font-size: $font-size-xs;
-  color: $color-text-tertiary;
-}
-
-.qualityOptions {
-  display: flex;
-  gap: $spacing-md;
-}
-
-.qualityBtn {
-  @include button-reset;
-  flex: 1;
-  flex-direction: column;
-  height: 120rpx;
-  border-radius: $radius-md;
-  background: $color-bg-card;
-  color: $color-text-secondary;
   box-shadow: $shadow-soft;
   @include press-effect;
-  gap: 4rpx;
-
+  
   &.active {
     background: $color-primary;
     color: $color-text-white;
-
-    .qualityLabel,
-    .qualityDesc {
-      color: $color-text-white;
-    }
   }
-}
-
-.qualityLabel {
-  font-size: $font-size-md;
-  font-weight: $font-weight-medium;
-  color: $color-text-primary;
-}
-
-.qualityDesc {
-  font-size: $font-size-xs;
-  color: $color-text-tertiary;
 }
 
 .bottomBar {
@@ -212,7 +195,7 @@
   @include press-effect;
 }
 
-.saveBtn {
+.previewBtn {
   @include button-reset;
   flex: 1;
   height: $button-height-lg;
@@ -222,10 +205,117 @@
   font-size: $font-size-md;
   font-weight: $font-weight-medium;
   @include press-effect;
-
+  
   &:disabled {
     opacity: 0.6;
   }
+}
+
+.previewModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-lg;
+}
+
+.previewModalContent {
+  width: 100%;
+  max-width: 640rpx;
+  max-height: 90vh;
+  background: $color-bg-card;
+  border-radius: $radius-xl;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: $shadow-popup;
+}
+
+.previewModalHeader {
+  @include flex-between;
+  padding: $spacing-lg $spacing-lg $spacing-md;
+  border-bottom: 1rpx solid $color-divider;
+}
+
+.previewModalTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.previewCloseBtn {
+  @include button-reset;
+  width: 56rpx;
+  height: 56rpx;
+  background: $color-bg-hover;
+  border-radius: 50%;
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+}
+
+.previewModalBody {
+  flex: 1;
+  padding: $spacing-lg;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300rpx;
+  max-height: 60vh;
+}
+
+.previewModalImage {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: $radius-md;
+}
+
+.previewModalFooter {
+  padding: $spacing-md $spacing-lg $spacing-lg;
+  border-top: 1rpx solid $color-divider;
+}
+
+.previewModalInfo {
+  display: block;
+  text-align: center;
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-md;
+}
+
+.previewModalActions {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.previewModalCancel {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-md;
+  background: $color-bg-hover;
+  color: $color-text-secondary;
+  border-radius: $radius-button;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  @include press-effect;
+}
+
+.previewModalConfirm {
+  @include button-reset;
+  flex: 2;
+  height: $button-height-md;
+  background: $color-primary;
+  color: $color-text-white;
+  border-radius: $radius-button;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  @include press-effect;
 }
 
 .saving {
@@ -240,12 +330,12 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-}
-
-.savingText {
-  color: $color-text-white;
-  margin-top: $spacing-md;
-  font-size: $font-size-md;
+  
+  Text {
+    color: $color-text-white;
+    margin-top: $spacing-md;
+    font-size: $font-size-md;
+  }
 }
 
 .spinner {
@@ -261,96 +351,4 @@
   to {
     transform: rotate(360deg);
   }
-}
-
-.previewModal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-  padding: $spacing-lg;
-}
-
-.previewModalContent {
-  width: 100%;
-  max-width: $max-content-width;
-  max-height: 85vh;
-  background: $color-bg-card;
-  border-radius: $radius-xl;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  box-shadow: $shadow-popup;
-}
-
-.previewModalTitle {
-  font-family: $font-family-serif;
-  font-size: $font-size-lg;
-  font-weight: $font-weight-semibold;
-  color: $color-text-primary;
-  text-align: center;
-  padding: $spacing-lg $spacing-lg $spacing-sm;
-}
-
-.previewModalInfo {
-  text-align: center;
-  padding: 0 $spacing-lg $spacing-md;
-}
-
-.previewModalInfoText {
-  font-size: $font-size-xs;
-  color: $color-text-tertiary;
-}
-
-.previewModalImageWrap {
-  flex: 1;
-  min-height: 0;
-  padding: 0 $spacing-lg;
-  overflow-y: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.previewModalImage {
-  width: 100%;
-  max-height: 55vh;
-  border-radius: $radius-md;
-}
-
-.previewModalActions {
-  display: flex;
-  gap: $spacing-md;
-  padding: $spacing-lg;
-  padding-bottom: calc(env(safe-area-inset-bottom) + $spacing-lg);
-}
-
-.previewCancelBtn {
-  @include button-reset;
-  width: 200rpx;
-  height: $button-height-lg;
-  background: $color-bg-hover;
-  color: $color-text-secondary;
-  border-radius: $radius-button;
-  font-size: $font-size-md;
-  font-weight: $font-weight-medium;
-  @include press-effect;
-}
-
-.previewConfirmBtn {
-  @include button-reset;
-  flex: 1;
-  height: $button-height-lg;
-  background: $color-primary;
-  color: $color-text-white;
-  border-radius: $radius-button;
-  font-size: $font-size-md;
-  font-weight: $font-weight-medium;
-  @include press-effect;
 }
