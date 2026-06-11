@@ -97,7 +97,7 @@ const ExportPreviewPage: React.FC = () => {
 
           ctx.scale(dpr, dpr);
 
-          const { background, border, textStyle, content, stickers: placedStickers } = currentJournal;
+          const { background, border, textStyle, content, stickers: placedStickers, drawPaths } = currentJournal;
 
           if (background.type === 'solid' && background.color) {
             ctx.fillStyle = background.color;
@@ -202,6 +202,32 @@ const ExportPreviewPage: React.FC = () => {
           });
 
           Promise.all(stickerPromises).then(() => {
+            drawPaths.forEach((path) => {
+              if (path.points.length < 2) return;
+
+              ctx.beginPath();
+              ctx.strokeStyle = path.color;
+              ctx.lineWidth = path.width * scale;
+              ctx.lineCap = 'round';
+              ctx.lineJoin = 'round';
+              ctx.globalAlpha = path.opacity;
+
+              const firstPoint = path.points[0];
+              const startX = (firstPoint.x / 686) * pixelWidth;
+              const startY = (firstPoint.y / 900) * pixelHeight;
+              ctx.moveTo(startX, startY);
+
+              for (let i = 1; i < path.points.length; i++) {
+                const point = path.points[i];
+                const x = (point.x / 686) * pixelWidth;
+                const y = (point.y / 900) * pixelHeight;
+                ctx.lineTo(x, y);
+              }
+              ctx.stroke();
+            });
+
+            ctx.globalAlpha = 1;
+
             const dataUrl = canvas.toDataURL('image/png', 1.0);
             resolve(dataUrl);
           });
@@ -234,8 +260,8 @@ const ExportPreviewPage: React.FC = () => {
   };
 
   const handlePreview = useCallback(async () => {
-    if (!currentJournal.content.trim()) {
-      Taro.showToast({ title: '请先输入内容', icon: 'none' });
+    if (!currentJournal.content.trim() && currentJournal.stickers.length === 0 && currentJournal.drawPaths.length === 0) {
+      Taro.showToast({ title: '请先添加内容', icon: 'none' });
       return;
     }
 

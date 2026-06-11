@@ -1,10 +1,11 @@
 import Taro from '@tarojs/taro';
-import { JournalData, DraftItem, ExportRecord, FavoriteTemplate, LayoutTemplate, FeedbackRecord, ExportClarity, ExportShape } from '@/types/journal';
+import { JournalData, DraftItem, ExportRecord, FavoriteTemplate, LayoutTemplate, FeedbackRecord, ExportClarity, ExportShape, FavoriteSticker, StickerItem } from '@/types/journal';
 
 const DRAFTS_KEY = 'journal_drafts';
 const CURRENT_DRAFT_KEY = 'current_draft_id';
 const EXPORT_RECORDS_KEY = 'export_records';
 const FAVORITE_TEMPLATES_KEY = 'favorite_templates';
+const FAVORITE_STICKERS_KEY = 'favorite_stickers';
 const FEEDBACK_RECORDS_KEY = 'feedback_records';
 
 export const saveDraft = async (data: JournalData): Promise<void> => {
@@ -248,5 +249,65 @@ export const getFeedbackRecords = async (): Promise<FeedbackRecord[]> => {
     return res.data ? JSON.parse(res.data) : [];
   } catch {
     return [];
+  }
+};
+
+export const addFavoriteSticker = async (sticker: StickerItem): Promise<void> => {
+  try {
+    const favorites = await getFavoriteStickers();
+    const existingIndex = favorites.findIndex(f => f.stickerId === sticker.id);
+    if (existingIndex >= 0) {
+      console.log('[Storage] 贴纸已收藏:', sticker.id);
+      return;
+    }
+    const now = Date.now();
+    const favorite: FavoriteSticker = {
+      id: `favs_${now}_${Math.random().toString(36).substr(2, 9)}`,
+      stickerId: sticker.id,
+      sticker: { ...sticker },
+      favoritedAt: now,
+    };
+    favorites.unshift(favorite);
+    await Taro.setStorage({
+      key: FAVORITE_STICKERS_KEY,
+      data: JSON.stringify(favorites),
+    });
+    console.log('[Storage] 贴纸已收藏:', sticker.id);
+  } catch (error) {
+    console.error('[Storage] 收藏贴纸失败:', error);
+    throw error;
+  }
+};
+
+export const removeFavoriteSticker = async (stickerId: string): Promise<void> => {
+  try {
+    const favorites = await getFavoriteStickers();
+    const filtered = favorites.filter(f => f.stickerId !== stickerId);
+    await Taro.setStorage({
+      key: FAVORITE_STICKERS_KEY,
+      data: JSON.stringify(filtered),
+    });
+    console.log('[Storage] 已取消收藏贴纸:', stickerId);
+  } catch (error) {
+    console.error('[Storage] 取消收藏贴纸失败:', error);
+    throw error;
+  }
+};
+
+export const getFavoriteStickers = async (): Promise<FavoriteSticker[]> => {
+  try {
+    const res = await Taro.getStorage({ key: FAVORITE_STICKERS_KEY });
+    return res.data ? JSON.parse(res.data) : [];
+  } catch {
+    return [];
+  }
+};
+
+export const isStickerFavorited = async (stickerId: string): Promise<boolean> => {
+  try {
+    const favorites = await getFavoriteStickers();
+    return favorites.some(f => f.stickerId === stickerId);
+  } catch {
+    return false;
   }
 };

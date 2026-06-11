@@ -161,3 +161,56 @@
   right: 0;
   z-index: 300;
 }
+
+.multiActionBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(107, 142, 122, 0.95);
+  padding: $spacing-md $spacing-lg;
+  padding-top: calc(env(safe-area-inset-top) + $spacing-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 400;
+  box-shadow: $shadow-float;
+}
+
+.multiActionInfo {
+  color: $color-text-white;
+  font-size: $font-size-sm;
+}
+
+.multiActionBtns {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.multiActionBtn {
+  @include button-reset;
+  padding: $spacing-sm $spacing-md;
+  background: rgba(255, 255, 255, 0.2);
+  color: $color-text-white;
+  border-radius: $radius-md;
+  font-size: $font-size-xs;
+  @include press-effect;
+  
+  &.primary {
+    background: $color-text-white;
+    color: $color-primary;
+  }
+  
+  &.danger {
+    background: rgba(184, 100, 100, 0.9);
+  }
+}
+
+.drawLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}

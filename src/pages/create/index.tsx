@@ -12,6 +12,10 @@ const CreatePage: React.FC = () => {
   const {
     currentJournal,
     selectedStickerId,
+    selectedStickerIds,
+    multiSelectMode,
+    drawColor,
+    drawWidth,
     updateContent,
     updateTextStyle,
     updateBackground,
@@ -19,9 +23,21 @@ const CreatePage: React.FC = () => {
     addSticker,
     updateSticker,
     removeSticker,
+    copySticker,
     selectSticker,
+    toggleStickerSelection,
+    clearStickerSelection,
+    selectAllStickers,
+    copySelectedStickers,
+    removeSelectedStickers,
+    setMultiSelectMode,
     applyTemplate,
     createNewJournal,
+    addDrawPath,
+    removeDrawPath,
+    clearDrawPaths,
+    setDrawColor,
+    setDrawWidth,
   } = useJournalStore();
 
   const handleApplyTemplate = useCallback((template: typeof templates[0]) => {
@@ -46,9 +62,9 @@ const CreatePage: React.FC = () => {
   }, [currentJournal, createNewJournal]);
 
   const handleExport = useCallback(() => {
-    if (!currentJournal.content.trim()) {
+    if (!currentJournal.content.trim() && currentJournal.stickers.length === 0 && currentJournal.drawPaths.length === 0) {
       Taro.showToast({
-        title: '请先输入内容',
+        title: '请先添加内容',
         icon: 'none',
         duration: 2000,
       });
@@ -58,15 +74,11 @@ const CreatePage: React.FC = () => {
     Taro.navigateTo({
       url: '/pages/export-preview/index',
     });
-  }, [currentJournal.content]);
+  }, [currentJournal.content, currentJournal.stickers.length, currentJournal.drawPaths.length]);
 
   const handleAddSticker = useCallback((stickerId: string, color: string) => {
-    addSticker(stickerId);
-    const lastSticker = currentJournal.stickers[currentJournal.stickers.length];
-    if (lastSticker) {
-      updateSticker(lastSticker.id, { color });
-    }
-  }, [addSticker, currentJournal.stickers, updateSticker]);
+    addSticker(stickerId, color);
+  }, [addSticker]);
 
   return (
     <View className={styles.page}>
@@ -121,9 +133,26 @@ const CreatePage: React.FC = () => {
           onAddSticker={handleAddSticker}
           onUpdateSticker={updateSticker}
           onRemoveSticker={removeSticker}
+          onCopySticker={copySticker}
           onSelectSticker={selectSticker}
+          onToggleStickerSelection={toggleStickerSelection}
+          onClearStickerSelection={clearStickerSelection}
+          onSelectAllStickers={selectAllStickers}
+          onCopySelectedStickers={copySelectedStickers}
+          onRemoveSelectedStickers={removeSelectedStickers}
+          onSetMultiSelectMode={setMultiSelectMode}
           selectedStickerId={selectedStickerId}
+          selectedStickerIds={selectedStickerIds}
+          multiSelectMode={multiSelectMode}
           onExport={handleExport}
+          drawPaths={currentJournal.drawPaths}
+          drawColor={drawColor}
+          drawWidth={drawWidth}
+          onAddDrawPath={addDrawPath}
+          onRemoveDrawPath={removeDrawPath}
+          onClearDrawPaths={clearDrawPaths}
+          onSetDrawColor={setDrawColor}
+          onSetDrawWidth={setDrawWidth}
         />
       </View>
     </View>

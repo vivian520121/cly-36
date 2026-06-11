@@ -39,6 +39,31 @@ export interface PlacedSticker {
   color: string;
 }
 
+export interface FavoriteSticker {
+  id: string;
+  stickerId: string;
+  sticker: StickerItem;
+  favoritedAt: number;
+}
+
+export interface DrawPoint {
+  x: number;
+  y: number;
+}
+
+export interface DrawPath {
+  id: string;
+  points: DrawPoint[];
+  color: string;
+  width: number;
+  opacity: number;
+}
+
+export interface DrawData {
+  paths: DrawPath[];
+  activePath: DrawPath | null;
+}
+
 export interface LayoutTemplate {
   id: string;
   name: string;
@@ -62,6 +87,7 @@ export interface JournalData {
   background: BackgroundStyle;
   border: BorderStyle;
   stickers: PlacedSticker[];
+  drawPaths: DrawPath[];
   templateId?: string;
   createdAt: number;
   updatedAt: number;

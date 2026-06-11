@@ -1,0 +1,146 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+  
+  &.active {
+    pointer-events: auto;
+  }
+}
+
+.canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+.toolbar {
+  position: absolute;
+  bottom: 20rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: $spacing-md;
+  padding: $spacing-sm $spacing-md;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: $radius-xl;
+  box-shadow: $shadow-float;
+  z-index: 10;
+  align-items: center;
+}
+
+.toolBtn {
+  @include button-reset;
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: $radius-lg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  background: $color-bg-hover;
+  color: $color-text-secondary;
+  @include press-effect;
+  
+  &.active {
+    background: $color-primary;
+    color: $color-text-white;
+  }
+  
+  &.danger {
+    color: $color-error;
+  }
+}
+
+.divider {
+  width: 2rpx;
+  height: 48rpx;
+  background: $color-divider;
+  margin: 0 $spacing-xs;
+}
+
+.colorPicker {
+  display: flex;
+  gap: $spacing-sm;
+  align-items: center;
+}
+
+.colorItem {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: $radius-round;
+  border: 4rpx solid transparent;
+  @include press-effect;
+  
+  &.active {
+    border-color: $color-primary;
+    transform: scale(1.15);
+  }
+}
+
+.widthPicker {
+  display: flex;
+  gap: $spacing-sm;
+  align-items: center;
+}
+
+.widthItem {
+  @include button-reset;
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-bg-hover;
+  @include press-effect;
+  
+  &.active {
+    background: $color-primary;
+  }
+}
+
+.widthDot {
+  border-radius: $radius-round;
+  background: currentColor;
+  
+  .active & {
+    background: $color-text-white;
+  }
+}
+
+.tip {
+  position: absolute;
+  top: 20rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: $spacing-sm $spacing-lg;
+  background: rgba(139, 115, 85, 0.9);
+  color: $color-text-white;
+  font-size: $font-size-xs;
+  border-radius: $radius-lg;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+.pathsLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.svgPath {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
