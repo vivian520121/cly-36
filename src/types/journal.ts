@@ -101,12 +101,29 @@ export const BORDER_TYPES = [
   { label: '双线', value: 'double' },
 ];
 
+export type ExportCanvasSize = 'square' | 'wallpaper' | 'card';
+
+export const EXPORT_SIZE_PRESETS: Record<ExportCanvasSize, { label: string; desc: string; width: number; height: number }> = {
+  square: { label: '正方形', desc: '1:1', width: 1080, height: 1080 },
+  wallpaper: { label: '竖版壁纸', desc: '9:16', width: 1080, height: 1920 },
+  card: { label: '方形卡片', desc: '3:4', width: 1080, height: 1440 },
+};
+
+export type ExportQuality = 'standard' | 'hd' | 'ultra';
+
+export const EXPORT_QUALITY_PRESETS: Record<ExportQuality, { label: string; scale: number }> = {
+  standard: { label: '标准', scale: 1 },
+  hd: { label: '高清', scale: 2 },
+  ultra: { label: '超清', scale: 3 },
+};
+
 export interface ExportRecord {
   id: string;
   title: string;
   preview: string;
   imageUrl: string;
-  size: '1x' | '2x' | '3x';
+  canvasSize: ExportCanvasSize;
+  quality: ExportQuality;
   exportedAt: number;
   data: JournalData;
 }

@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro';
-import { JournalData, DraftItem, ExportRecord, FavoriteTemplate, LayoutTemplate, FeedbackRecord } from '@/types/journal';
+import { JournalData, DraftItem, ExportRecord, ExportCanvasSize, ExportQuality, FavoriteTemplate, LayoutTemplate, FeedbackRecord } from '@/types/journal';
 
 const DRAFTS_KEY = 'journal_drafts';
 const CURRENT_DRAFT_KEY = 'current_draft_id';
@@ -101,7 +101,8 @@ export const generateId = (): string => {
 export const saveExportRecord = async (
   data: JournalData,
   imageUrl: string,
-  size: '1x' | '2x' | '3x'
+  canvasSize: ExportCanvasSize,
+  quality: ExportQuality
 ): Promise<void> => {
   try {
     const records = await getExportRecords();
@@ -111,7 +112,8 @@ export const saveExportRecord = async (
       title: data.content.slice(0, 30) || '未命名手账',
       preview: data.content.slice(0, 100),
       imageUrl,
-      size,
+      canvasSize,
+      quality,
       exportedAt: now,
       data: { ...data },
     };
